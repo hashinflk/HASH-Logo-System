@@ -14,27 +14,38 @@
     <div class="app-container" id="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="top-section">
-                <button class="brand-btn">HASH Logo SVG</button>
+            <div class="top-section" style="text-align: center;">
+                <div style="font-family: var(--font-title); font-size: 3.5rem; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; letter-spacing: 2px;">
+                    HASH
+                </div>
+                <div style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-muted); letter-spacing: 6px; text-transform: uppercase; margin-top: -10px;">
+                    iNfinite
+                </div>
             </div>
-            
-            <nav class="nav-menu">
-                <button class="nav-btn" id="nav-palette" onclick="switchTab('palette')">
-                    <span class="icon"></span> Color Palette
-                </button>
-                <button class="nav-btn active" id="nav-preview" onclick="switchTab('preview')">
-                    <span class="icon"></span> HASH iNfinite Lk<br>Logo Previewer
-                </button>
-                <button class="nav-btn" onclick="window.open('https://hashinfinite.lk', '_blank')">
-                    <span class="icon"></span> Visit Us<br>on Web
-                </button>
-            </nav>
             
             <div class="social-links">
                 <a href="tel:+94724229837" class="social-circle" title="Call Us"><i class="fa-solid fa-phone"></i></a>
                 <a href="https://facebook.com/hashinfinite" target="_blank" class="social-circle" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                 <a href="https://instagram.com/hashinfinite" target="_blank" class="social-circle" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
             </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn" id="nav-palette" onclick="switchTab('palette')">
+                    <span class="icon"><i class="fa-solid fa-palette"></i></span>
+                    <span class="nav-text">Color Palette</span>
+                    <span class="mobile-text">Colors</span>
+                </button>
+                <button class="nav-btn active" id="nav-preview" onclick="switchTab('preview')">
+                    <span class="icon"><i class="fa-solid fa-eye"></i></span>
+                    <span class="nav-text">Logo Previewer</span>
+                    <span class="mobile-text">Preview</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://hashinfinite.lk', '_blank')">
+                    <span class="icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    <span class="nav-text">Visit Website</span>
+                    <span class="mobile-text">Visit Us</span>
+                </button>
+            </nav>
         </aside>
 
         <!-- Main Content -->
