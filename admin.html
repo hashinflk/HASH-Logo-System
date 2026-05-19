@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Hash iNfinite</title>
+    <!-- Google Fonts for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #c726dc;
+            --primary-gradient: linear-gradient(135deg, #c726dc, #7b1fa2);
+            --bg-dark: #09090b;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Beautiful dark purple radial gradient background */
+            background-image: radial-gradient(circle at 50% 0%, rgba(199, 38, 220, 0.15) 0%, transparent 50%);
+            padding: 2rem;
+        }
+
+        .admin-card {
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 3.5rem;
+            width: 100%;
+            max-width: 750px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle glow effect behind card */
+        .admin-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(199, 38, 220, 0.1), transparent 30%);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .admin-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #d1d5db;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(199, 38, 220, 0.2);
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .file-upload-area {
+            border: 2px dashed rgba(199, 38, 220, 0.4);
+            border-radius: 16px;
+            padding: 2rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(199, 38, 220, 0.03);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(199, 38, 220, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .file-upload-area i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(199, 38, 220, 0.3));
+        }
+
+        .file-upload-area h3 {
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-group.colors {
+            margin-top: 6rem;
+        }
+
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .color-input-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        .color-input-wrapper:focus-within {
+            border-color: var(--primary);
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .color-picker {
+            -webkit-appearance: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: none;
+            flex-shrink: 0;
+        }
+
+        .color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-picker::-webkit-color-swatch {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        .color-hex {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: monospace;
+            font-size: 0.95rem;
+            width: 100%;
+            margin-left: 0.8rem;
+            outline: none;
+            text-transform: uppercase;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            box-shadow: 0 10px 20px rgba(199, 38, 220, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(199, 38, 220, 0.3);
+        }
+        
+        .result-section {
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: none;
+            text-align: center;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-section.active {
+            display: block;
+        }
+        
+        .qr-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            display: inline-block;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .link-display {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .link-text {
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.95rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-card">
+        <div class="admin-header">
+            <h1>Hash Admin Portal</h1>
+            <p>Upload Client Logos & Generate Secure Access</p>
+        </div>
+        
+        <div class="form-group">
+            <label>Client Name / Project Name</label>
+            <input type="text" id="client-name" class="form-control" placeholder="e.g. Acme Corporation Branding">
+        </div>
+        
+        <div class="upload-grid">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Upload Logo Designs</label>
+                <div class="file-upload-area" onclick="document.getElementById('logo-input').click()">
+                    <i class="fa-regular fa-image"></i>
+                    <h3>Logos</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.2rem; font-size: 0.8rem;">.png files</p>
+                </div>
+                <input type="file" id="logo-input" accept="image/png" multiple style="display: none;" onchange="updateFileName('logo-input', 'logo-names')">
+                <div id="logo-names" style="color: var(--primary); font-size: 0.85rem; text-align: center; font-weight: 500; margin-top: 0.8rem;"></div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Upload Fonts</label>
+                <div class="file-upload-area" onclick="document.getElementById('font-input').click()">
+                    <i class="fa-solid fa-font"></i>
+                    <h3>Fonts</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.2rem; font-size: 0.8rem;">.ttf, .otf files</p>
+                </div>
+                <input type="file" id="font-input" accept=".ttf,.otf" multiple style="display: none;" onchange="updateFileName('font-input', 'font-names')">
+                <div id="font-names" style="color: var(--primary); font-size: 0.85rem; text-align: center; font-weight: 500; margin-top: 0.8rem;"></div>
+            </div>
+        </div>
+
+        <div class="form-group colors">
+            <label>Brand Colors (Optional)</label>
+            <div class="color-picker-grid">
+                <div class="color-input-wrapper">
+                    <input type="color" id="c1-picker" class="color-picker" value="#fff9c6" oninput="document.getElementById('c1-hex').value = this.value">
+                    <input type="text" id="c1-hex" class="color-hex" value="#fff9c6" maxlength="7" oninput="document.getElementById('c1-picker').value = this.value">
+                </div>
+                <div class="color-input-wrapper">
+                    <input type="color" id="c2-picker" class="color-picker" value="#c726dc" oninput="document.getElementById('c2-hex').value = this.value">
+                    <input type="text" id="c2-hex" class="color-hex" value="#c726dc" maxlength="7" oninput="document.getElementById('c2-picker').value = this.value">
+                </div>
+                <div class="color-input-wrapper">
+                    <input type="color" id="c3-picker" class="color-picker" value="#0052cc" oninput="document.getElementById('c3-hex').value = this.value">
+                    <input type="text" id="c3-hex" class="color-hex" value="#0052cc" maxlength="7" oninput="document.getElementById('c3-picker').value = this.value">
+                </div>
+                <div class="color-input-wrapper">
+                    <input type="color" id="c4-picker" class="color-picker" value="#00875a" oninput="document.getElementById('c4-hex').value = this.value">
+                    <input type="text" id="c4-hex" class="color-hex" value="#00875a" maxlength="7" oninput="document.getElementById('c4-picker').value = this.value">
+                </div>
+            </div>
+        </div>
+        
+        <button class="generate-btn" id="generate-btn">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Secure Link & QR
+        </button>
+        
+        <div class="result-section" id="result-section">
+            <h3 style="font-weight: 500; font-size: 1.3rem;">Access Granted for Client</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">Send this link or QR code to the client. The preview is locked without it.</p>
+            
+            <div class="qr-container">
+                <img id="qr-code" src="" alt="QR Code" style="display: block;">
+            </div>
+            
+            <div class="link-display">
+                <span class="link-text" id="generated-link">https://hashinfinite.lk/preview?token=...</span>
+                <button class="copy-btn" onclick="copyLink()"><i class="fa-regular fa-copy"></i> Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateFileName(inputId, displayId) {
+            const input = document.getElementById(inputId);
+            const display = document.getElementById(displayId);
+            if (input.files.length > 0) {
+                display.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${input.files.length} file(s) ready`;
+            } else {
+                display.innerHTML = '';
+            }
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const clientName = document.getElementById('client-name').value || 'Client';
+            
+            // Create a unique token for this client
+            const token = btoa(clientName + Date.now()).substring(0, 15);
+            
+            // Get selected colors
+            const c1 = document.getElementById('c1-hex').value.replace('#', '');
+            const c2 = document.getElementById('c2-hex').value.replace('#', '');
+            const c3 = document.getElementById('c3-hex').value.replace('#', '');
+            const c4 = document.getElementById('c4-hex').value.replace('#', '');
+            
+            let baseUrl = window.location.href.replace('admin.html', 'index.html');
+            if (!baseUrl.includes('index.html')) {
+                let basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+                baseUrl = window.location.origin + basePath + '/index.html';
+            }
+            
+            const fullLink = `${baseUrl}?token=${token}&client=${encodeURIComponent(clientName)}&c1=${c1}&c2=${c2}&c3=${c3}&c4=${c4}`;
+            
+            document.getElementById('generated-link').textContent = fullLink;
+            
+            // Generate QR Code using a public API
+            document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(fullLink)}`;
+            
+            document.getElementById('result-section').classList.add('active');
+            
+            // Scroll to bottom smoothly to see the result
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
+        });
+        
+        function copyLink() {
+            const linkText = document.getElementById('generated-link').textContent;
+            navigator.clipboard.writeText(linkText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                btn.style.background = 'var(--primary)';
+                btn.style.borderColor = 'var(--primary)';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.style.borderColor = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

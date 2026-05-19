@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Presentation | Hash iNfinite</title>
+    <!-- Google Fonts for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body oncontextmenu="return false;">
+    
+    <div class="app-container" id="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="top-section">
+                <button class="brand-btn">HASH Logo SVG</button>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn" id="nav-palette" onclick="switchTab('palette')">
+                    <span class="icon"></span> Color Palette
+                </button>
+                <button class="nav-btn active" id="nav-preview" onclick="switchTab('preview')">
+                    <span class="icon"></span> HASH iNfinite Lk<br>Logo Previewer
+                </button>
+                <button class="nav-btn" onclick="window.open('https://hashinfinite.lk', '_blank')">
+                    <span class="icon"></span> Visit Us<br>on Web
+                </button>
+            </nav>
+            
+            <div class="social-links">
+                <a href="tel:+94724229837" class="social-circle" title="Call Us"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://facebook.com/hashinfinite" target="_blank" class="social-circle" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://instagram.com/hashinfinite" target="_blank" class="social-circle" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="main-content">
+            <!-- Logo Previewer Tab -->
+            <section id="tab-preview" class="tab-content active" style="position: relative;">
+                
+                <!-- Access Denied Overlay (Only for Preview Tab) -->
+                <div class="access-denied-overlay" id="access-overlay">
+                    <div class="access-modal">
+                        <i class="fa-solid fa-lock" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h2>ACCESS RESTRICTED</h2>
+                        <p>You need a secure link or QR code from Hash iNfinite to view this page. Please use the link provided to you.</p>
+                    </div>
+                </div>
+
+                <div class="preview-layout">
+                    <!-- Top Selectors -->
+                    <div class="selectors-row">
+                        <div class="selector-box">
+                            <h3 class="box-title">Select Color</h3>
+                            <div class="options-grid" id="color-options">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        <div class="selector-box">
+                            <h3 class="box-title">Select Font</h3>
+                            <div class="options-grid" id="font-options">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Area -->
+                    <div class="preview-bottom-row">
+                        <!-- Logo Display -->
+                        <div class="logo-display-box" id="viewer-container">
+                            <div class="protection-overlay">
+                                <div class="watermark-pattern"></div>
+                                <div class="watermark-center" id="watermark-text">Hash iNfinite</div>
+                            </div>
+                            <img id="logo-preview" src="" alt="Logo Design Concept">
+                            <div class="loader" id="loader">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Description and Terms -->
+                        <div class="info-column">
+                            <div class="description-box">
+                                <h3 class="combo-title"><span id="current-color-name">Color</span> + <span id="current-font-name">Font</span></h3>
+                                <div class="ai-description" id="ai-description">
+                                    <!-- AI generated description goes here -->
+                                </div>
+                                <button id="approve-btn" class="submit-btn">SUBMIT</button>
+                            </div>
+                            <div class="terms-box">
+                                <h3>Our Terms and Conditions</h3>
+                                <p>Designs are intellectual property of Hash iNfinite until final handover. Image saving is disabled to protect concepts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Color Palette Tab -->
+            <section id="tab-palette" class="tab-content">
+                <div class="palette-header">
+                    <h2 class="page-title">Select Color Palette</h2>
+                    <div class="ai-search-bar">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <input type="text" id="ai-color-prompt" placeholder="Looking for... (e.g. 'Coffee shop', 'Modern tech')">
+                        <button id="ai-generate-btn">Generate</button>
+                    </div>
+                </div>
+                
+                <div class="palette-container-wrapper">
+                    <div class="palette-container">
+                        <div class="palettes-grid" id="palettes-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="scroll-more">
+                            Scroll to More <br>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="palette-submit-row">
+                        <button class="submit-send-btn" id="palette-submit-btn">Submit & Send</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Configuration & Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
